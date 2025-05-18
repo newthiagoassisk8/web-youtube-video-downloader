@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import './styles.css';
+import { useNavigate } from 'react-router-dom';
 
 export function Home() {
     const [videoId, setVideoID] = useState<string>('')
     const [isLoading, setisLoading] = useState(false)
+      const navigate = useNavigate();
 
 
     async function handleSubmit() {
@@ -21,7 +23,9 @@ export function Home() {
             });
 
             const data = await response.json();
-            console.log(data)
+
+            navigate('/video-details', { state: { video: data } });
+
             return data
 
         } catch (error) {

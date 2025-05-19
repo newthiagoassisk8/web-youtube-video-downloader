@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 export function Home() {
     const [videoId, setVideoID] = useState<string>('')
     const [isLoading, setisLoading] = useState(false)
-      const navigate = useNavigate();
+    const navigate = useNavigate();
 
 
     async function handleSubmit() {
@@ -23,6 +23,15 @@ export function Home() {
             });
 
             const data = await response.json();
+
+            if(data && data.title){
+                const history = JSON.parse(localStorage.getItem('downloadHistory') ||  '[]');
+                const newVideo = {
+                    title: data.title,
+                    downloadedAt: new Date().toISOString()
+                }
+                localStorage.setItem('downloadHistory', JSON.stringify([...history, newVideo]));
+            }
 
             navigate('/video-details', { state: { video: data } });
 

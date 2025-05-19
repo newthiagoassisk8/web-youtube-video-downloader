@@ -9,7 +9,9 @@ type VideoInfo = {
 
 export function VideoDetails() {
   const location = useLocation();
-  const video = (location.state as { video: VideoInfo })?.video;
+
+  const video = (location.state as { video: VideoInfo }).video as VideoInfo;
+
   if (!video) {
     return <Navigate to="/" />;
   }
@@ -19,10 +21,9 @@ export function VideoDetails() {
       <div className="card">
         <strong>{video.title}</strong>
         <p>URL expira em {video.expires_in_minutes} minutos</p>
-        <a href={video.download_url} target="_blank" rel="noopener noreferrer">
+        <a href={video.download_url} rel="noopener noreferrer">
           {video.download_url}
         </a>
-        <div className="loader" />
       </div>
     </div>
   );

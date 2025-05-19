@@ -1,71 +1,111 @@
-import { useState } from 'react';
-import './styles.css';
-import { useNavigate } from 'react-router-dom';
-import Header from '../../components/Header';
+import { useState } from "react";
+import "./styles.css";
+import { useNavigate } from "react-router-dom";
+import Header from "../../components/Header";
 
 export function Home() {
-    const [videoId, setVideoID] = useState<string>('')
-    const [isLoading, setisLoading] = useState(false)
-    const navigate = useNavigate();
+  const [videoId, setVideoID] = useState<string>("");
+  const [isLoading, setisLoading] = useState(false);
+  const [progress, setProgress] = useState(0);
 
+  const navigate = useNavigate();
 
-    async function handleSubmit() {
-        try {
-            setisLoading(true)
-            const trimmedID = videoId.trim()
-            if (!trimmedID) return;
+  function fakeProgress() {
+    let p = 0;
+    const interval = setInterval(() => {
+      p += Math.random() * 10;
+      if (p >= 95) {
+        clearInterval(interval);
+      }
+      setProgress(Math.min(p, 98));
+    }, 300);
+    return interval;
+  }
 
-            const response = await fetch(`http://192.168.0.27:8000/download`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ id: trimmedID }),
-            });
+  async function handleSubmit() {
+    try {
+      setisLoading(true);
+      setProgress(0);
+      const trimmedID = videoId.trim();
+      if (!trimmedID) return;
+      let interval = fakeProgress();
 
-            const data = await response.json();
+      const response = await fetch(`http://192.168.0.27:8000/download`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id: trimmedID }),
+      });
 
-            if(data && data.title){
-                const history = JSON.parse(localStorage.getItem('downloadHistory') ||  '[]');
-                const newVideo = {
-                    title: data.title,
-                    downloadedAt: new Date().toISOString()
-                }
-                localStorage.setItem('downloadHistory', JSON.stringify([...history, newVideo]));
-            }
+      if (!response.ok) {
+        throw new Error("Erro ao baixar o vídeo");
+      }
+      clearInterval(interval);
+      setProgress(100);
+      const data = await response.json();
 
-            navigate('/video-details', { state: { video: data } });
+      if (data && data.title) {
+        const history = JSON.parse(
+          localStorage.getItem("downloadHistory") || "[]"
+        );
+        const newVideo = {
+          title: data.title,
+          downloadedAt: new Date().toISOString(),
+        };
+        localStorage.setItem(
+          "downloadHistory",
+          JSON.stringify([...history, newVideo])
+        );
+      }
 
-            return data
+      navigate("/video-details", { state: { video: data } });
 
-        } catch (error) {
-            const errMsg = "Erro ao enviar comando: " + error;
-            alert(errMsg)
-
-        } finally {
-            setisLoading(false)
-
-        }
-
+      return data;
+    } catch (error) {
+      const errMsg = "Erro ao enviar comando: " + error;
+      alert(errMsg);
+    } finally {
+      setisLoading(false);
     }
+  }
 
-    return (
-        <div className="container">
-            <Header />
-            <h1>Youtube Client</h1>
-            <div className="input-group">
-                <input
-                    type='text'
-                    value={videoId}
-                    placeholder='Insira o ID do vídeo'
-                    onChange={(e) => setVideoID(e.target.value)}
+  return (
+    <div className="container">
+      <Header />
+      <h1>Youtube Client</h1>
+      <div className="input-group">
+        <input
+          type="text"
+          value={videoId}
+          placeholder="Insira o ID do vídeo"
+          onChange={(e) => setVideoID(e.target.value)}
+        />
 
-                />
-                <button onClick={handleSubmit} disabled={isLoading}>
-                    {isLoading ? 'Carregando...' : 'Baixar'}
-                </button>
-
+        {!isLoading && <button onClick={handleSubmit}>Baixar</button>}
+        {isLoading && (
+          <div style={{ marginTop: "1rem" }}>
+            <p>Baixando... {Math.round(progress)}%</p>
+            <div
+              style={{
+                background: "#eee",
+                height: "10px",
+                borderRadius: "5px",
+              }}
+            >
+              <div
+                style={{
+                  width: `${progress}%`,
+                  background: "#4caf50",
+                  height: "100%",
+                  borderRadius: "5px",
+                  transition: "width 0.3s ease",
+                }}
+              ></div>
             </div>
-        </div>
-    );
+          </div>
+        )}
+      </div>
+    </div>
+  );
 }

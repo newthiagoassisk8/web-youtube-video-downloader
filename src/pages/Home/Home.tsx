@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import './styles.css';
 import { useNavigate } from 'react-router-dom';
+import Header from '../../components/Header';
 
 export function Home() {
     const [videoId, setVideoID] = useState<string>('')
@@ -50,6 +51,7 @@ export function Home() {
 
     return (
         <div className="container">
+            <Header />
             <h1>Youtube Client</h1>
             <div className="input-group">
                 <input

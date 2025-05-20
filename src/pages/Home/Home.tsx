@@ -17,7 +17,7 @@ export function Home() {
       if (p >= 95) {
         clearInterval(interval);
       }
-      setProgress(Math.min(p, 98));
+      setProgress(Math.min(p, 73));
     }, 300);
     return interval;
   }
@@ -75,13 +75,13 @@ export function Home() {
       <Header />
       <h1>Youtube Client</h1>
       <div className="input-group">
-        <input
+        {!isLoading && <input
           type="text"
           value={videoId}
           placeholder="Insira o ID do vídeo"
           onChange={(e) => setVideoID(e.target.value)}
         />
-
+}
         {!isLoading && <button onClick={handleSubmit}>Baixar</button>}
         {isLoading && (
           <div style={{ marginTop: "1rem" }}>

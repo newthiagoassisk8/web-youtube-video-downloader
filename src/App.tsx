@@ -3,7 +3,7 @@ import { Home } from './pages/Home/Home';
 import { VideoDetails } from './pages/VideoDetails/VideoDetails';
 import { VideoHistory } from './pages/History/History';
 
-// TODO: Persistencia de dados para salvar histórico de downloads
+
 function App() {
   return (
     <BrowserRouter>

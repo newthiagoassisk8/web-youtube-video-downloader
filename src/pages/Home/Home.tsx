@@ -72,16 +72,16 @@ export function Home() {
 
   return (
     <div className="container">
-      <Header />
       <h1>Youtube Client</h1>
       <div className="input-group">
-        {!isLoading && <input
-          type="text"
-          value={videoId}
-          placeholder="Insira o ID do vídeo"
-          onChange={(e) => setVideoID(e.target.value)}
-        />
-}
+        {!isLoading && (
+          <input
+            type="text"
+            value={videoId}
+            placeholder="Insira o ID do vídeo"
+            onChange={(e) => setVideoID(e.target.value)}
+          />
+        )}
         {!isLoading && <button onClick={handleSubmit}>Baixar</button>}
         {isLoading && (
           <div style={{ marginTop: "1rem" }}>

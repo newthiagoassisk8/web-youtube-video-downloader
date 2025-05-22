@@ -6,7 +6,7 @@ const Header: React.FC = () => {
     return (
         <header className='header'>
             <nav className='nav'>
-                <Link to="/home" className='link'>Home</Link>
+                <Link to="/" className='link'>Home</Link>
                 <Link to="/videoDetails" className='link'>Detalhes do Vídeo</Link>
                 <Link to="/history" className='link'>Histórico</Link>
                 <Link to="/schedule" className='link'>Formulário</Link>

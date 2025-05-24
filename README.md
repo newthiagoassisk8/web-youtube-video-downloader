@@ -39,5 +39,5 @@ A API utilizada por ambas as versões está disponível neste repositório:
 # Instale as dependências
 npm install
 
-# Inicie o servidor de desenvolvimento
-npm run dev
+# Rode o projeto
+npm start

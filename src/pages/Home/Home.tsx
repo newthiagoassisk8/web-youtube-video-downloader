@@ -1,10 +1,10 @@
 import { useState } from "react";
 import "./styles.css";
 import { useNavigate } from "react-router-dom";
-import Header from "../../components/Header";
+
 
 export function Home() {
-  const [videoId, setVideoID] = useState<string>("");
+  const [url, setVideoUrl] = useState<string>("");
   const [isLoading, setisLoading] = useState(false);
   const [progress, setProgress] = useState(0);
 
@@ -22,12 +22,20 @@ export function Home() {
     return interval;
   }
 
+  function extractYouTubeVideoId(url: string): string | null {
+    const regex = /(?:youtube\.com\/.*v=|youtu\.be\/)([^&#?\s]+)/;
+    const match = url.match(regex);
+    return match ? match[1] : null;
+  }
+
   async function handleSubmit() {
     try {
       setisLoading(true);
       setProgress(0);
+      const videoId = extractYouTubeVideoId(url);
+
+      if (!videoId) return; //se não for um ID válido, não faz nada
       const trimmedID = videoId.trim();
-      if (!trimmedID) return;
       let interval = fakeProgress();
 
       const response = await fetch(`http://192.168.0.27:8000/download`, {
@@ -77,9 +85,9 @@ export function Home() {
         {!isLoading && (
           <input
             type="text"
-            value={videoId}
-            placeholder="Insira o ID do vídeo"
-            onChange={(e) => setVideoID(e.target.value)}
+            value={url}
+            placeholder="Insira o link do vídeo do youtube"
+            onChange={(e) => setVideoUrl(e.target.value)}
           />
         )}
         {!isLoading && <button onClick={handleSubmit}>Baixar</button>}

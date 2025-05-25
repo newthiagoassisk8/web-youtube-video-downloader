@@ -2,10 +2,10 @@ import { useState } from "react";
 import "./styles.css";
 import { useNavigate } from "react-router-dom";
 
-
 export function Home() {
   const [url, setVideoUrl] = useState<string>("");
   const [isLoading, setisLoading] = useState(false);
+  const [errMsg, setErrMsg] = useState<string>("");
   const [progress, setProgress] = useState(0);
 
   const navigate = useNavigate();
@@ -22,20 +22,32 @@ export function Home() {
     return interval;
   }
 
-  function extractYouTubeVideoId(url: string): string | null {
+  function extractYouTubeVideoId(url: string): {
+    videoId: string | null;
+    isValid: boolean;
+  } {
     const regex = /(?:youtube\.com\/.*v=|youtu\.be\/)([^&#?\s]+)/;
     const match = url.match(regex);
-    return match ? match[1] : null;
+
+    if (match && match[1]) {
+      return { videoId: match[1], isValid: true };
+    }
+
+    return { videoId: null, isValid: false };
   }
 
   async function handleSubmit() {
     try {
+      const result = extractYouTubeVideoId(url);
+      if (!result.isValid) {
+        setErrMsg("Por favor, insira um link válido do YouTube.");
+        return;
+      }
       setisLoading(true);
       setProgress(0);
-      const videoId = extractYouTubeVideoId(url);
 
-      if (!videoId) return; //se não for um ID válido, não faz nada
-      const trimmedID = videoId.trim();
+      if (!result.videoId) return; //se não for um ID válido, não faz nada
+      const trimmedID = result.videoId.trim();
       let interval = fakeProgress();
 
       const response = await fetch(`http://192.168.0.27:8000/download`, {
@@ -81,6 +93,7 @@ export function Home() {
   return (
     <div className="container">
       <h1>Youtube Client</h1>
+
       <div className="input-group">
         {!isLoading && (
           <input
@@ -90,10 +103,14 @@ export function Home() {
             onChange={(e) => setVideoUrl(e.target.value)}
           />
         )}
+
         {!isLoading && <button onClick={handleSubmit}>Baixar</button>}
+        {!isLoading && <p>{errMsg}</p>}
+
         {isLoading && (
           <div style={{ marginTop: "1rem" }}>
             <p>Baixando... {Math.round(progress)}%</p>
+
             <div
               style={{
                 background: "#eee",

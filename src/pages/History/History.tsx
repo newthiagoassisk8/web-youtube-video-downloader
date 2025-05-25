@@ -7,7 +7,7 @@ interface VideoHistoryItem {
   title: string;
   downloadedAt: string;
 }
-
+// criar pagincacao quando o historico ficar muito grande
 export function VideoHistory() {
   const [history, setHistory] = useState<VideoHistoryItem[]>([]);
   const navigate = useNavigate();
@@ -41,12 +41,23 @@ export function VideoHistory() {
             </li>
           ))}
         </ul>
+      ):(
+      <div className="empty-history">
+        <p>Nenhum vídeo baixado ainda.</p>
+      </div>
       )}
-
       <div>
-        <button className="buttons" onClick={handleClearHistory}>Limpar histórico</button>
+
+        {*/* condicional para o button de limpar aparecer quando historico tiver itens </button> */}
+        {history.length > 0 && (
+          <button className="buttons" onClick={handleClearHistory}>
+            Limpar Histórico
+          </button>
+        )}
         <button className="buttons" onClick={() => navigate("/")}>Voltar para a Home</button>
       </div>
     </div>
   );
 }
+
+

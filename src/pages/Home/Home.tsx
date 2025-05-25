@@ -2,9 +2,12 @@ import { useState } from "react";
 import "./styles.css";
 import { useNavigate } from "react-router-dom";
 
+// case melhoria usar o react hook forms para validacao de forms
+
+
 export function Home() {
   const [url, setVideoUrl] = useState<string>("");
-  const [isLoading, setisLoading] = useState(false);
+  const [isLoading, setisLoading] = useState<boolean>(false);
   const [errMsg, setErrMsg] = useState<string>("");
   const [progress, setProgress] = useState(0);
 
@@ -79,17 +82,20 @@ export function Home() {
         );
       }
 
+      // existem duas maneiras de mandar estados para outra page localtion ou queryparams(id)
       navigate("/video-details", { state: { video: data } });
 
       return data;
     } catch (error) {
       const errMsg = "Erro ao enviar comando: " + error;
+      //criar um componente toastyfy para capturar sucesso , error....
       alert(errMsg);
     } finally {
       setisLoading(false);
     }
   }
 
+  // TODO: tirar o css da page
   return (
     <div className="container">
       <h1>Youtube Client</h1>
@@ -133,4 +139,7 @@ export function Home() {
       </div>
     </div>
   );
+
+
+
 }

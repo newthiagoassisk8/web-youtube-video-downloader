@@ -7,7 +7,7 @@ interface VideoHistoryItem {
   title: string;
   downloadedAt: string;
 }
-
+// criar pagincacao quando o historico ficar muito grande
 export function VideoHistory() {
   const [history, setHistory] = useState<VideoHistoryItem[]>([]);
   const navigate = useNavigate();
@@ -28,13 +28,15 @@ export function VideoHistory() {
       <h1>Histórico de Downloads</h1>
 
       {history.length === 0 ? (
-        <p>Nenhum vídeo baixado ainda.</p>
+        <div className="empty-history">
+          <p>Nenhum vídeo baixado ainda.</p>
+        </div>
       ) : (
         <ul>
           {history.map((video, index) => (
             <li key={index}>
               <strong>{video.title}</strong>
-
+              <br />
               <small>
                 Baixado em: {new Date(video.downloadedAt).toLocaleString()}
               </small>
@@ -43,10 +45,19 @@ export function VideoHistory() {
         </ul>
       )}
 
-      <div>
-        <button className="buttons" onClick={handleClearHistory}>Limpar histórico</button>
-        <button className="buttons" onClick={() => navigate("/")}>Voltar para a Home</button>
+      <div style={{ marginTop: "20px" }}>
+        {history.length > 0 && (
+          <button className="buttons" onClick={handleClearHistory}>
+            Limpar Histórico
+          </button>
+        )}
+        <button className="buttons" onClick={() => navigate("/")}>
+          Voltar para a Home
+        </button>
       </div>
     </div>
   );
+
 }
+
+

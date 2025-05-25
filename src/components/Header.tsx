@@ -11,7 +11,7 @@ const Header: React.FC = () => {
     }
     return (
         <header className='header'>
-            <h1>Bem vindo, {user ? user : "Visitante"}</h1>
+            <h1>Bem vindo, {user ? user.name : "Visitante"}</h1>
             <nav className='nav'>
                 <Link to="/" className='link'>Home</Link>
                 <Link to="/videoDetails" className='link'>Detalhes do Vídeo</Link>

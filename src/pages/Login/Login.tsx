@@ -1,16 +1,21 @@
 import { useState } from 'react';
 import { useAuth } from "../../contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 export const Login = () => {
     const { login } = useAuth();
     const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
+    const navigate = useNavigate();
+
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
+
             await login(userName, password);
-            alert("Login realizado com sucesso!");
+            navigate("/home");
+            // alert(`Login realizado com sucesso! Bem-vindo, ${}`);
         } catch (error) {
             alert("Erro ao fazer login. Verifique suas credenciais.");
             console.error("Erro ao fazer login:", error);

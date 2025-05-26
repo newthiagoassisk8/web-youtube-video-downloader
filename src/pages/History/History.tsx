@@ -46,6 +46,7 @@ export function VideoHistory() {
       )}
 
       <div style={{ marginTop: "20px" }}>
+{/* Se a condição for verdadeira, então mostre o que está dentro dos parênteses. */}
         {history.length > 0 && (
           <button className="buttons" onClick={handleClearHistory}>
             Limpar Histórico
@@ -59,5 +60,3 @@ export function VideoHistory() {
   );
 
 }
-
-

@@ -16,16 +16,19 @@ const Header: React.FC = () => {
             </div>
             <nav className='flex gap-2'>
                 <Link to="/" className='link'>Home</Link>
-                <Link to="/videoDetails" className='link'>Detalhes do Vídeo</Link>
                 <Link to="/history" className='link'>Histórico</Link>
                 <Link to="/schedule" className='link'>Formulário</Link>
             </nav>
-            <div className='gap-1 flex'>
+            {user && (
+                <div className='gap-1 flex'>
                 <button className='logout-button' onClick={handleLogout}>
                 Sair
                 </button>
-
             </div>
+            )
+
+            }
+
         </header>
     );
 };

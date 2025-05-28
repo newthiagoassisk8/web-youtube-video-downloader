@@ -10,17 +10,22 @@ const Header: React.FC = () => {
         alert("Logout realizado com sucesso!");
     }
     return (
-        <header className='header'>
-            <h1>Bem vindo, {user ? user.name : "Visitante"}</h1>
-            <nav className='nav'>
+        <header className='header gap-2 flex'>
+            <div>
+                <span>Bem vindo, {user ? user.name : "Visitante"}</span>
+            </div>
+            <nav className='flex gap-2'>
                 <Link to="/" className='link'>Home</Link>
                 <Link to="/videoDetails" className='link'>Detalhes do Vídeo</Link>
                 <Link to="/history" className='link'>Histórico</Link>
                 <Link to="/schedule" className='link'>Formulário</Link>
             </nav>
-            <button className='logout-button' onClick={handleLogout}>
+            <div className='gap-1 flex'>
+                <button className='logout-button' onClick={handleLogout}>
                 Sair
-            </button>
+                </button>
+
+            </div>
         </header>
     );
 };

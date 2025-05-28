@@ -25,7 +25,7 @@ export const Login = () => {
     return (
         <div className="container">
             <h1>Login</h1>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className='flex gap-2 flex-col'>
                 <div className="input-group">
                     <input
                         type="text"

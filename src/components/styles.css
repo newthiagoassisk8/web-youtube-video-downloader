@@ -1,16 +1,35 @@
 /* TODO: corrigir esse header no CSS */
+/* Objetivo da aula de hoje: Ter conhecimento básico de css para resolver problemas sozinho
+*/
 .header {
     background-color: #1a1a1a;
     padding: 10px 20px;
-    display: flex;
+    /* display: flex; */
     justify-content: center;
     align-items: center;
 }
 
-.nav {
+.flex {
     display: flex;
+}
+
+.flex-col {
+    flex-direction: column;
+}
+
+.gap-1 {
+    gap: 5px;
+
+}
+
+.gap-2 {
+    gap: 10px;
+}
+
+.gap-3 {
     gap: 15px;
 }
+
 
 .link {
     color: #00ff7f;

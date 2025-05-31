@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from "../contexts/AuthContext"
 import './styles.css';
+import './../assets/global.css';
 
 const Header: React.FC = () => {
     const { user, logout } = useAuth();
@@ -10,8 +11,8 @@ const Header: React.FC = () => {
         alert("Logout realizado com sucesso!");
     }
     return (
-        <header className='header'>
-            <h1>Bem vindo, {user ? user.name : "Visitante"}</h1>
+        <header className='header gap-2 flex'>
+            <span>Bem vindo, {user ? user.name:'Visitante'}</span>
             <nav className='nav'>
                 <Link to="/" className='link'>Home</Link>
                 <Link to="/videoDetails" className='link'>Detalhes do Vídeo</Link>

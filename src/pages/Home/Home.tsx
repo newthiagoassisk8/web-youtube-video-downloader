@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./styles.css";
 import { useNavigate } from "react-router-dom";
-
+import SplitButton from "../../components/Button/SplitButton";
 // case melhoria usar o react hook forms para validacao de forms
 
 
@@ -110,7 +110,10 @@ export function Home() {
           />
         )}
 
-        {!isLoading && <button onClick={handleSubmit}>Baixar</button>}
+
+
+        {!isLoading && <SplitButton/>}
+        {/* {!isLoading && <button onClick={handleSubmit}>Baixar</button>} */}
         {!isLoading && <p>{errMsg}</p>}
 
         {isLoading && (

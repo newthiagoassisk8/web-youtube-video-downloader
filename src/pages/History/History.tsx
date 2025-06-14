@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 import "./styles.css";
+
 
 
 interface VideoHistoryItem {
@@ -8,10 +10,13 @@ interface VideoHistoryItem {
   title: string;
   downloadedAt: string;
 }
+
 // criar pagincacao quando o historico ficar muito grande
 export function VideoHistory() {
-  const [history, setHistory] = useState<VideoHistoryItem[]>([]);
+  const [history, setHistory] = useState<VideoHistoryItem[]>([{id:'1',title:'thiago',downloadedAt:'reorek'}]);
   const navigate = useNavigate();
+  const [name,setName] = useState<string>('dsds')
+
 
   useEffect(() => {
     const stored = localStorage.getItem("downloadHistory");
@@ -21,12 +26,13 @@ export function VideoHistory() {
   }, []);
 
   function handleClearHistory() {
-    localStorage.removeItem("downloadHistory");
-    setHistory([]);
+    setName("ok")
+    // localStorage.removeItem("downloadHistory");
+    // setHistory([]);
   }
   return (
     <div className="container">
-      <h1>Histórico de Downloads</h1>
+      <h1>Mudança para teste</h1>
 
       {history.length === 0 ? (
         <div className="empty-history">
@@ -57,6 +63,8 @@ export function VideoHistory() {
         <button className="buttons" onClick={() => navigate("/")}>
           Voltar para a Home
         </button>
+
+
 
 
       </div>

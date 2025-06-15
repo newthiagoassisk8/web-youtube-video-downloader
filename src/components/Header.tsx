@@ -15,7 +15,7 @@ const Header: React.FC = () => {
                 <span>Bem vindo, {user ? user.name : "Visitante"}</span>
             </div>
             <nav className='flex gap-2'>
-                <Link to="/" className='link'>Home</Link>
+                <Link to="/home" className='link'>Home</Link>
                 <Link to="/history" className='link'>Histórico</Link>
                 <Link to="/schedule" className='link'>Formulário</Link>
             </nav>

@@ -1,30 +1,29 @@
 # 🌐 YouTube Video Downloader (Web)
 
-Este é um **cliente web** desenvolvido com **React** que permite baixar vídeos do YouTube a partir de um link ou ID, se conectando a uma API backend que utiliza `yt-dlp`. Essa aplicação foi construída como uma extensão da [versão mobile](https://github.com/newthiagoassisk8/youtube-video-downloader), com foco no aprendizado de desenvolvimento front-end com React para web.
+This is a **web client** built with **React** that allows you to download YouTube videos using a link or video ID. It connects to a backend API that uses `yt-dlp`. This project was developed as an extension of the [mobile version](https://github.com/newthiagoassisk8/youtube-video-downloader), with a focus on learning front-end development with React for the web.
 
+## 🔁 Mobile Version
 
-## 🔁 Versão Mobile
-
-Se você está procurando a versão para **dispositivos móveis**, confira o repositório abaixo:
+If you're looking for the **mobile version**, check out the repository below:
 
 📱 [YouTube Video Downloader - React Native](https://github.com/newthiagoassisk8/youtube-video-downloader)
 
-## 📡 Backend da Aplicação
+## 📡 Backend API
 
-A API utilizada por ambas as versões está disponível neste repositório:
+The API used by both versions is available in this repository:
 
 🔧 [https://github.com/newthiagoassisk8/ytb-api](https://github.com/newthiagoassisk8/ytb-api)
 
+## 📸 Demo
 
-## 📸 Demonstração
+![Web version demo](demoVideo/youtubeVideoDownloaderReact.gif)
 
-![Demonstração da versão web](demoVideo/youtubeVideoDownloaderReact.gif)
-
-## ⚙️ Como rodar o projeto
+## ⚙️ How to Run the Project
 
 ```bash
-# Instale as dependências
+# Install dependencies
 npm install
 
-# Rode o projeto
+# Start the project
 npm start
+```

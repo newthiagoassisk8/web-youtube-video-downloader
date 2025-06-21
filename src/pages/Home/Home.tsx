@@ -1,17 +1,39 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./styles.css";
 import { useNavigate } from "react-router-dom";
-import SplitButton from "../../components/Button/SplitButton";
-// case melhoria usar o react hook forms para validacao de forms
+import YouTube, { videoItemProps } from "../../components/youtubeSkeleton/ytbSkeleton";
 
+// case melhoria usar o react hook forms para validacao de forms
 
 export function Home() {
   const [url, setVideoUrl] = useState<string>("");
+  const [isDownloading, setisDownloading] = useState<boolean>(false);
   const [isLoading, setisLoading] = useState<boolean>(false);
   const [errMsg, setErrMsg] = useState<string>("");
   const [progress, setProgress] = useState(0);
+  const [videoData, setVideoData] = useState<videoItemProps>();
 
   const navigate = useNavigate();
+  let videoId = extractYouTubeVideoId(url).videoId;
+
+  useEffect(() => {
+    if (!videoId) return;
+
+    const fetchVideoInfo = async () => {
+      try {
+        setisLoading(true);
+        const response = await fetch(`http://192.168.0.27:8000/video-info/${videoId}`);
+        const data = await response.json();
+        setVideoData(data);
+      } catch (error) {
+        console.error('Erro ao buscar informações do vídeo:', error);
+      }finally{
+        setisLoading(false);
+      }
+    };
+
+    fetchVideoInfo();
+  }, [url, videoId]);
 
   function fakeProgress() {
     let p = 0;
@@ -46,7 +68,7 @@ export function Home() {
         setErrMsg("Por favor, insira um link válido do YouTube.");
         return;
       }
-      setisLoading(true);
+      setisDownloading(true);
       setProgress(0);
 
       if (!result.videoId) return; //se não for um ID válido, não faz nada
@@ -91,7 +113,7 @@ export function Home() {
       //criar um componente toastyfy para capturar sucesso , error....
       alert(errMsg);
     } finally {
-      setisLoading(false);
+      setisDownloading(false);
     }
   }
 
@@ -101,7 +123,7 @@ export function Home() {
       <h1>Youtube Client</h1>
 
       <div className="input-group">
-        {!isLoading && (
+        {!isDownloading && (
           <input
             type="text"
             value={url}
@@ -109,14 +131,11 @@ export function Home() {
             onChange={(e) => setVideoUrl(e.target.value)}
           />
         )}
+        {!isDownloading && <button onClick={handleSubmit}> Baixar</button>}
+        {!isDownloading && <p>{errMsg}</p>}
+         <YouTube  videoItem={videoData} loading={isLoading} />
 
-
-
-        {!isLoading && <SplitButton/>}
-        {/* {!isLoading && <button onClick={handleSubmit}>Baixar</button>} */}
-        {!isLoading && <p>{errMsg}</p>}
-
-        {isLoading && (
+        {isDownloading && (
           <div style={{ marginTop: "1rem" }}>
             <p>Baixando... {Math.round(progress)}%</p>
 
@@ -142,7 +161,4 @@ export function Home() {
       </div>
     </div>
   );
-
-
-
 }

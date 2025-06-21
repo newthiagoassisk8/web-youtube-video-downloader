@@ -34,15 +34,6 @@ div h2#abc.xyz.link {
   background-color: #1db954;
 }
 
-/* Pega todos os span que são filhos da div */
-div  span {
-  background-color: #b91d73;
-}
-
-/* Pega todos os span que são filhos DIRETO da div */
-div > span {
-  background-color: #b91d73;
-}
 
  header div button {
     background-color: blue;
